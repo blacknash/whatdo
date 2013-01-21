@@ -7,16 +7,25 @@ function WhatdoCtrl($scope,$http){
 		$scope.users = data;
 	});
 
-
 	$scope.save = function(){
-		data = {description:$scope.tododescription,done:false,responsable:$scope.todoresponsable.id,priority:1};
+		data = {
+			description: $scope.tododescription,
+			done: false,
+			responsable: $scope.todoresponsable.id,
+			checker: $scope.todochecker.id, 
+			status: 'created',
+			priority: 1
+		};
 		
 		$http.post("server/todos/save",data).success(function(){
 			$scope.todos.push(data);
 			$scope.tododescription= "";
 			$scope.todoresponsable= "";
 		});
+	}
 
+	$scope.updateTodo = function($index,id){
+		$scope.todos[$index].status = 'started';
 	}
 
 	$scope.remaining = function(){
