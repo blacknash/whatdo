@@ -8,5 +8,9 @@
 			$data = $this->getRequestArgs();
 			return $this->db->save("todos",$data);
 		}
+		public function update(){
+			$data = $this->getRequestArgs();
+			return $this->db->update("todos",$data, array("id"=>$data['id']));
+		}
 	}
 ?>

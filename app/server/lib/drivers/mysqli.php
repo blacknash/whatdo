@@ -38,10 +38,29 @@ class db_mysqli{
 		$completefields = implode(",", $completefields);
 		$values = implode(",", $values);
 
-		print $query = "INSERT INTO {$table}({$completefields}) VALUES({$values})";
+		$query = "INSERT INTO {$table}({$completefields}) VALUES({$values})";
 		$this->execute($query);
 	}
 
+	public function update($table,$fields,$conditions,$conditionglue = "AND"){
+		$condition = array();
+		$assoc = array();
+
+		foreach($fields as $field => $value){
+			array_push($assoc,sprintf(" `%s`='%s' ",$field,$value));
+		}
+
+		foreach($conditions as $field => $value){
+			array_push($condition,sprintf(" `%s`='%s' ",$field,$value));
+		}
+
+		$assoc = implode(",", $assoc);
+		$condition = implode($conditionglue,$condition);
+
+	 $query = "UPDATE {$table} SET {$assoc} WHERE {$condition}";
+	 $this->execute($query);
+	}
+	
 	public function select($table,$order = null, $fields = "*"){
 		
 		if(is_array($fields)){
