@@ -1,7 +1,7 @@
 <?php
 	class todos extends core{
 		public function getlist(){
-			return $this->db->select("todos","created");
+			return $this->db->select("todos", NULL, "created");
 		}
 
 		public function save(){

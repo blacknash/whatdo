@@ -7,7 +7,6 @@ define("WHATDO_CONTROLLER_DIR",WHATDO_BASE_DIR."controller".DS);
 
 include("lib/connector.php");
 
-
 class core extends connector{
 	
 	private $classname = "", $action = "", $format = "";

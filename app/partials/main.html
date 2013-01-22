@@ -22,8 +22,11 @@
 			<input ng-model="query"  placeholder="Search"/>
 			<div>Todos : <span>{{remaining()}}</span> of {{todos.length}}</div>
 			<ul>
-				<li ng-repeat="todo in todos | filter:query" class="todo-{{todo.status}}">
-					<input type="button" ng-click="updateTodo($index,todo.id)" value="{{todo.status | buttonlegend }}"> 
+				<li ng-repeat="todo in todos | filter:query" class="todo-{{todo.status}}" >
+					<input type="button" ng-hide="todo.status=='revision' || todo.status=='accepted'" ng-click="updateTodo($index,todo.id)" value="{{todo.status | buttonlegend }}"> 
+					<input type="button" ng-show="todo.status=='revision'" ng-click="updateTodo($index,todo.id,'accepted')" value="accept"> 
+					<input type="button" ng-show="todo.status=='revision'" ng-click="updateTodo($index,todo.id,'rejected')" value="reject"> 
+
 					<span>{{todo.description}}</span>
 					<span class='responsable'>{{todo.responsable}}</span>
 				</li>

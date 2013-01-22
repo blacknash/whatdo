@@ -40,6 +40,7 @@ class db_mysqli{
 
 		$query = "INSERT INTO {$table}({$completefields}) VALUES({$values})";
 		$this->execute($query);
+		return $this->source->insert_id;
 	}
 
 	public function update($table,$fields,$conditions,$conditionglue = "AND"){
@@ -60,8 +61,8 @@ class db_mysqli{
 	 $query = "UPDATE {$table} SET {$assoc} WHERE {$condition}";
 	 $this->execute($query);
 	}
-	
-	public function select($table,$order = null, $fields = "*"){
+
+	public function select($table,$conditions = NULL,$order=NULL,$fields = "*"){
 		
 		if(is_array($fields)){
 			$fields = implode(",",$this->field_correct($fields));

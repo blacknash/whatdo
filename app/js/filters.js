@@ -4,6 +4,12 @@ angular.module('angularFilters',[]).filter('buttonlegend',function(){
 			case 'started':
 				legend = 'finish'
 			break;
+			case 'revision':
+				legend = 'deliver';
+			break;
+			case 'rejected':
+				legend = 'restart';
+			break;
 			default:
 				legend = 'start';
 		}
