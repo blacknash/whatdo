@@ -1,22 +1,32 @@
 function WhatdoCtrl($scope,$http){
-	$http.get('server/todos/getlist.json').success(function(data){
-		$scope.todos = data;
+	$http.get('server/projects/getlist.json').success(function(data){
+		$scope.projects = data;
+		$scope.myprojects = $scope.projects[0];
+		$scope.updateLists($scope.projects[0]);
 	});
 
-	$http.get('server/todos/getlistaccepted.json').success(function(data){
-		$scope.todosaccepted = data;
-	});
+	$scope.updateLists = function(index){
+		data = {project:index.id};
+		$http.post('server/todos/getlist.json',data).success(function(data){
+			$scope.todos = data;
+		});
 
-	
+		$http.post('server/todos/getlistaccepted.json',data).success(function(data){
+			$scope.todosaccepted = data;
+		});
+	}
+
 	$http.get('server/users/getlist.json').success(function(data){
 		$scope.users = data;
 	});
+
 
 	$scope.save = function(){
 		data = {
 			description: $scope.tododescription,
 			responsable: $scope.todoresponsable.id,
 			checker: $scope.todochecker.id, 
+			project:$scope.myprojects.id,
 			status: 'created',
 			priority: 1
 		};

@@ -74,6 +74,10 @@ class db_mysqli{
 		if($conditions){
 			if(is_array($conditions)){
 				$_conditions = array();
+				if(!isset($conditions['glue'])){
+					$conditions['glue']='AND';
+				}
+
 				foreach($conditions as $field=>$c){
 					if($field!="glue"){
 						array_push($_conditions, $field.$c);

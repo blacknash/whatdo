@@ -13,21 +13,27 @@
 		public function getlist(){
 			$initweek = date("Y-m-d 00:00:00",strtotime('this week last monday', time()));
 			$endweek = date("Y-m-d 00:00:00",strtotime('this week next sunday', time()));
+
+			$data = $this->getRequestArgs();
+			
 			$conditions = array(
-				"glue"=>"OR",
-				"created"=>" BETWEEN '{$initweek}' AND '{$endweek}'",
-				"status"=>"!='accepted'"
+				"status"=>"!='accepted'",
+				"project"=>"='{$data['project']}'",
 			);
+
 			return $this->db->select("todos",'*',$conditions, "created");
 		}
 
 		public function getlistaccepted(){
 			$initweek = date("Y-m-d 00:00:00",strtotime('this week last monday', time()));
 
+			$data = $this->getRequestArgs();
+
 			$conditions = array(
 				"glue"=>"AND",
 				"created"=>" < '{$initweek}'",
-				"status"=>"='accepted'"
+				"status"=>"='accepted'",
+				"project"=>"='{$data['project']}'",
 			);
 
 			$todos =$this->db->select("todos","*",$conditions, NULL,"created");
@@ -48,7 +54,6 @@
 						'label'=>$label,
 						'todos'=>array(),
 					);
-
 				}
 				array_push($collection[$group]['todos'],$todo);
 			}
