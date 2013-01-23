@@ -1,7 +1,8 @@
 <?php
 class db_mysqli{
 	private $source;
-	
+	private $debug = false;
+
 	public function __construct($config){
 		$this->source = mysqli_connect($config['host'],$config['username'],$config['password'],$config['database']);
 	}
@@ -46,6 +47,8 @@ class db_mysqli{
 	public function update($table,$fields,$conditions,$conditionglue = "AND"){
 		$condition = array();
 		$assoc = array();
+		
+		$fields['updated'] = date("Y-m-d H:i:s");
 
 		foreach($fields as $field => $value){
 			array_push($assoc,sprintf(" `%s`='%s' ",$field,$value));
@@ -58,14 +61,32 @@ class db_mysqli{
 		$assoc = implode(",", $assoc);
 		$condition = implode($conditionglue,$condition);
 
-	 $query = "UPDATE {$table} SET {$assoc} WHERE {$condition}";
-	 $this->execute($query);
+		$query = "UPDATE {$table} SET {$assoc} WHERE {$condition}";
+	 	$this->execute($query);
 	}
 
-	public function select($table,$conditions = NULL,$order=NULL,$fields = "*"){
+	public function select($table,$fields = "*",$conditions = NULL,$group = NULL,$order = NULL){
 		
 		if(is_array($fields)){
 			$fields = implode(",",$this->field_correct($fields));
+		}
+
+		if($conditions){
+			if(is_array($conditions)){
+				$_conditions = array();
+				foreach($conditions as $field=>$c){
+					if($field!="glue"){
+						array_push($_conditions, $field.$c);
+					}
+				}
+				$condition= "WHERE ".implode(" {$conditions['glue']} ", $_conditions);
+			}else{
+				$condition = "WHERE ".$conditions;
+			}
+		}
+
+		if(!is_null($group)){
+			$group = "GROUP BY {$group}"; 
 		}
 
 		if(!is_null($order)){
@@ -76,12 +97,15 @@ class db_mysqli{
 			}
 		}
 
-		$query = "SELECT {$fields} FROM {$table} {$order}";
+		$query = "SELECT {$fields} FROM {$table} {$condition} {$group} {$order}";
 		$query = $this->execute($query);
 		return $this->db_array($query);
 	}
 
 	public function execute($query){
+		if($this->debug){
+			pr($query);
+		}
 		$query = mysqli_query($this->source,$query);
 		return $query;
 	}

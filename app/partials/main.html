@@ -31,7 +31,20 @@
 					<span class='responsable'>{{todo.responsable}}</span>
 				</li>
 			</ul>
-		</div>
+		</div> 
 
+	<div class='whatdo-prevlist span5'>
+			<ul>
+				<li ng-repeat="listed in todosaccepted" ng-click="show = !show" ng-init="show=0">
+					<span>{{listed.label}}</span> <span>{{(listed.todos).length}}</span>
+					<ul ng-show="show">
+						<li ng-repeat="todo in listed.todos" class="todo-{{todo.status}}"  >
+								<span>{{todo.description}}</span>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
 	</div>
+
 </div>

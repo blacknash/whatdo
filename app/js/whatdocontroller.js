@@ -3,6 +3,11 @@ function WhatdoCtrl($scope,$http){
 		$scope.todos = data;
 	});
 
+	$http.get('server/todos/getlistaccepted.json').success(function(data){
+		$scope.todosaccepted = data;
+	});
+
+	
 	$http.get('server/users/getlist.json').success(function(data){
 		$scope.users = data;
 	});
@@ -10,7 +15,6 @@ function WhatdoCtrl($scope,$http){
 	$scope.save = function(){
 		data = {
 			description: $scope.tododescription,
-			done: false,
 			responsable: $scope.todoresponsable.id,
 			checker: $scope.todochecker.id, 
 			status: 'created',
