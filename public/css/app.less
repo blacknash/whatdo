@@ -1,0 +1,128 @@
+@import "color";
+
+*{
+  margin:0px;
+  padding:0px;
+}
+
+body{
+  background: @body-bg;
+  font-size:12px;
+
+  #brand{
+    background: @brand-bg;
+    border-bottom:4px solid @brand-border;
+    h2{
+      color: @brand-font;
+      font-family: 'Sacramento', cursive;
+      margin: 0px;
+      padding: 16px;
+      padding-bottom:5px;
+    }
+  }
+  
+  #main-bar{
+    background: @mainbar-bg;
+    ul{
+      li{
+        cursor:pointer;
+        list-style:none;
+        font-size:14px;
+        padding:10px;
+        background: @li-bg;
+        color: @li-color;
+        margin:7px 0px;
+        &:hover{
+          background:@li-bghover;
+        }
+        &.selected{
+          font-weight:bold;
+          color:@white;
+          background:@li-selected;
+        }
+      }
+    }
+  }
+
+  #whatdo-list{
+    background :@work-space;
+    .toolbar{
+      background : @little-bar;
+      padding: 8px;
+      .search{
+        font-size:14px;
+        width:100%;
+        border:1px solid #ccc;
+        padding:4px;
+        hegith:32px;
+      }
+    }
+    .todoform{
+      padding:5px 10px;
+      background: @work-form;
+      .columns{
+        margin-bottom:5px;
+      }
+      .right-side{
+        text-align:right;
+      }
+    }
+    
+    ul{
+      li{
+        list-style:none;
+        font-size:13px;
+        padding:2px;
+        padding-left:20px;
+        background: @todolist-background ;
+        border-bottom: 1px solid @todolist-border;
+        margin-bottom:2px;
+        &.todo-accepted{
+          background:@accepted;
+        }
+        button{
+          margin-right:2px;
+          font-weight:normal;
+          &.button-restart{
+            background: @restart;
+            border:1px solid @border-restart;
+            &:hover{
+              opacity:0.8;
+            }
+          }
+          &.button-start{
+            background: @start;
+            border:1px solid @border-start;
+            &:hover{
+              opacity:0.8;
+            }
+          }
+          &.trash{
+            background-image:@trash;
+            background-position:center;
+            background-repeat: no-repeat;
+          }
+        }
+        span{
+          padding-left:4px;
+          &.rs{
+            padding:4px;
+            font-size:11px;
+            margin-right:2px;
+            margin-left:0px;
+            background:@rs;
+            border:1px solid @border-rs;
+          }
+          &.priority{
+            padding:4px;
+            font-size:10px;
+            margin-right:2px;
+            background:@priority;
+            border:1px solid @border-priority;
+          }
+        }
+      }
+    }
+  }
+
+}

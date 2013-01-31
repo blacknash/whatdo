@@ -1,0 +1,43 @@
+div(class="row")
+	#main-bar(class="three columns")
+		ul 
+			li(ng-class="{selected: myproject.name==project.name}",ng-repeat="project in projects",ng-click="updateLists(project)"){{project.name}}
+
+	#whatdo-list(class="nine columns")
+		div(class="row toolbar")
+			div(class="four columns")
+				button(class="small button",ng-click="todoform=!todoform") Add to-do
+			
+			div(class="four mobile-three columns")
+				input(ng-model="query",placeholder="Search to-do",class="search")
+
+		form(ng-submit="addTodo()",class="row todoform",ng-show="todoform")
+			
+			div(class="six columns")
+				label Requester
+				select(ng-model="todochecker",ng-options="user.name for user in users",required,placeholder="Select")
+
+			div(class="six columns")
+				label Responsable
+				select(ng-model="todoresponsable",ng-options="user.name for user in users",required)
+
+			div(class="twelve columns")
+				textarea(ng-model="tododescription",placeholder="To-do description",required)
+				div(class="right-side")
+					button(type="submit",class="small success button") Save to-do
+
+		ul(class="row")
+			li(ng-repeat="todo in todos | filter:query",class="todo-{{todo.status}}",ng-class-odd="'odd'",ng-class-even="'even'")
+
+				div(class="row")
+					
+					div(class="ten columns")
+						button(ng-click="updateTodo($index,todo.id)",ng-hide="todo.status=='revision' || todo.status=='accepted'",class="tiny button button-{{todo.status | buttonlegend}}") {{todo.status | buttonlegend}}
+						button(ng-click="updateTodo($index,'accepted')",ng-show="todo.status=='revision'",class="tiny success button") accept
+						button(ng-click="updateTodo($index,'rejected')",ng-show="todo.status=='revision'",class="tiny alert button") reject
+						span {{todo.description}}
+
+					div(class="two columns")
+						span(class="rs"){{todo.responsable}}
+						span(class="priority priority-{{todo.priority}}") {{todo.priority}}
+						button(ng-click="deleteTodo($index)",class="button trash tiny secondary") &nbsp;
